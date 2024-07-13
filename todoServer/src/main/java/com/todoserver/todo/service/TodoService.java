@@ -16,14 +16,14 @@ public class TodoService {
     private final TodoRepository todoRepository;
 
     @Transactional
-    public String save(String todoText) {
+    public String save(String todoText) throws IllegalStateException {
         validateDuplicateTodo(todoText);
         Todo todo = Todo.createTodo(todoText);
         todoRepository.save(todo);
         return todoText;
     }
 
-    private void validateDuplicateTodo(String todoText) {
+    private void validateDuplicateTodo(String todoText) throws IllegalStateException {
         Todo findTodo = todoRepository.findOne(todoText);
         if(findTodo != null) {
             throw new IllegalStateException("이미 존재하는 Todo 입니다.");
