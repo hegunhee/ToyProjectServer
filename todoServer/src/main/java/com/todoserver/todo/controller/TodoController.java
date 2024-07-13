@@ -4,12 +4,14 @@ import com.todoserver.todo.domain.Todo;
 import com.todoserver.todo.service.TodoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/todo",produces="application/json")
+@RequestMapping(path = "/todo")
 @RequiredArgsConstructor
 @Slf4j
 public class TodoController {
@@ -45,5 +47,10 @@ public class TodoController {
     @PatchMapping("/{id}")
     String toggleTodo(@PathVariable("id") String id) {
         return todoService.toggleTodo(id);
+    }
+
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<String> handleIllegalStateException(IllegalStateException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
     }
 }
