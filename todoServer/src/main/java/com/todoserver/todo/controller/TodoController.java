@@ -48,9 +48,4 @@ public class TodoController {
     String toggleTodo(@PathVariable("id") String id) {
         return todoService.toggleTodo(id);
     }
-
-    @ExceptionHandler(IllegalStateException.class)
-    public ResponseEntity<String> handleIllegalStateException(IllegalStateException e) {
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
-    }
 }
