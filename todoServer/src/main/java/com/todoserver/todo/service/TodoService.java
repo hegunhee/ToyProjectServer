@@ -23,10 +23,10 @@ public class TodoService {
         return todoText;
     }
 
-    private void validateDuplicateTodo(String todoText) throws IllegalStateException {
+    private void validateDuplicateTodo(String todoText) throws IllegalArgumentException {
         Todo findTodo = todoRepository.findOne(todoText);
         if(findTodo != null) {
-            throw new IllegalStateException("이미 존재하는 Todo 입니다.");
+            throw new IllegalArgumentException("이미 존재하는 Todo 입니다.");
         }
     }
 
