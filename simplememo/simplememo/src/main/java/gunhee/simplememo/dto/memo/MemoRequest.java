@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gunhee.simplememo.domain.IncomeExpenseType;
+import gunhee.simplememo.domain.Memo;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 
@@ -42,5 +43,9 @@ public class MemoRequest {
         this.asset = asset;
         this.description = description;
         this.price = price;
+    }
+
+    public Memo toEntity() {
+        return new Memo(memoDate,incomeExpenseType,attribute,asset,description,price);
     }
 }

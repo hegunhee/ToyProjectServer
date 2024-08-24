@@ -2,7 +2,6 @@ package gunhee.simplememo.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -45,5 +44,14 @@ public class Memo {
         this.asset = asset;
         this.description = description;
         this.price = price;
+    }
+
+    public void update(Memo updatedMemo) {
+        memoDate = updatedMemo.getMemoDate();
+        incomeExpenseType = updatedMemo.getIncomeExpenseType();
+        attribute = updatedMemo.getAttribute();
+        asset = updatedMemo.getAsset();
+        description = updatedMemo.getDescription();
+        price = updatedMemo.getPrice();
     }
 }
