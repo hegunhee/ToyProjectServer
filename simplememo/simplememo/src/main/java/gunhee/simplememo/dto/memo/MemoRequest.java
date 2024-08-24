@@ -5,7 +5,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gunhee.simplememo.domain.IncomeExpenseType;
 import gunhee.simplememo.domain.Memo;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 
 import java.math.BigDecimal;
@@ -19,12 +20,15 @@ public class MemoRequest {
 
     private final IncomeExpenseType incomeExpenseType;
 
-    @NotEmpty(message = "분류는 빈값이 될 수 없습니다.")
+    @NotBlank(message = "분류는 빈값이 될 수 없습니다.")
+    @Size(max = 10,message = "10글자 이상이면 안됩니다.")
     private final String attribute;
 
-    @NotEmpty(message = "지불타입은 빈값이 될 수 없습니다.")
+    @NotBlank(message = "지불타입은 빈값이 될 수 없습니다.")
+    @Size(max = 10,message = "10글자 이상이면 안됩니다.")
     private final String asset;
 
+    @Size(max = 50,message = "50글자 이상이면 안됩니다.")
     private final String description;
 
     private final BigDecimal price;

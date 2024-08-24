@@ -19,10 +19,13 @@ public class Memo {
     @Enumerated(value = EnumType.STRING)
     private IncomeExpenseType incomeExpenseType;
 
+    @Column(length = 10)
     private String attribute;
 
+    @Column(length = 10)
     private String asset;
 
+    @Column(length = 50)
     private String description;
 
     private BigDecimal price;
