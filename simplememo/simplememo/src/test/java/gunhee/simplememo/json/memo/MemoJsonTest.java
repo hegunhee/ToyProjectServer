@@ -1,10 +1,10 @@
-package gunhee.simplememo.json;
+package gunhee.simplememo.json.memo;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import gunhee.simplememo.domain.IncomeExpenseType;
 import gunhee.simplememo.domain.Memo;
 import gunhee.simplememo.dto.memo.MemoRequest;
+import gunhee.simplememo.json.memo.code.MemoObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 @Slf4j
 public class MemoJsonTest {
 
-    private final ObjectMapper mapper = new ObjectMapper().registerModule(new JavaTimeModule());
+    private final ObjectMapper mapper = MemoObjectMapper.mapper;
 
     @Test
     void JsonToMemoDtoTest() throws IOException {
