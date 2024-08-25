@@ -37,7 +37,7 @@ public class MemoService {
         return memoRepository.findMemosByAttribute(attribute,year,month);
     }
 
-    public StaticsMemosResponse sumMemosPriceByIncomeExpenseType(IncomeExpenseType type,int year,int month) {
+    public StaticsMemosResponse findStaticsMemo(IncomeExpenseType type, int year, int month) {
         BigDecimal sums = memoRepository.sumMemoPricesByIncomeExpenseType(type, year, month);
         List<StaticsMemoDto> staticsMemos = memoRepository.findMemosByIncomeExpenseType(sums, type, year, month);
         return new StaticsMemosResponse(type,year,month,sums,staticsMemos);

@@ -57,7 +57,7 @@ public class MemoController {
             @PathVariable("type") IncomeExpenseType type,
             @RequestParam("year") int year,
             @RequestParam("month") int month) {
-        return memoService.sumMemosPriceByIncomeExpenseType(type,year,month);
+        return memoService.findStaticsMemo(type,year,month);
     }
 
     @PostMapping("/v1/memo")

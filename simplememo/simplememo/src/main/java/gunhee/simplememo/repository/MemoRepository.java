@@ -33,5 +33,4 @@ public interface MemoRepository extends JpaRepository<Memo,Integer> {
             "AND MONTH(m.memoDate) = :month " +
             "GROUP BY m.attribute")
     public List<StaticsMemoDto> findMemosByIncomeExpenseType(@Param("totalSum") BigDecimal sum, @Param("type")IncomeExpenseType type, @Param("year") int year, @Param("month") int month);
-
 }
