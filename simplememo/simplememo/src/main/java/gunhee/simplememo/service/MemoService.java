@@ -1,10 +1,14 @@
 package gunhee.simplememo.service;
 
+import gunhee.simplememo.domain.IncomeExpenseType;
 import gunhee.simplememo.domain.Memo;
+import gunhee.simplememo.dto.memo.StaticsMemoDto;
+import gunhee.simplememo.dto.memo.StaticsMemosResponse;
 import gunhee.simplememo.repository.MemoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -33,6 +37,10 @@ public class MemoService {
         return memoRepository.findMemosByAttribute(attribute,year,month);
     }
 
+    public StaticsMemosResponse sumMemosPriceByIncomeExpenseType(IncomeExpenseType type,int year,int month) {
+        BigDecimal sums = memoRepository.sumMemoPricesByIncomeExpenseType(type, year, month);
+        List<StaticsMemoDto> staticsMemos = memoRepository.findMemosByIncomeExpenseType(sums, type, year, month);
+        return new StaticsMemosResponse(type,year,month,sums,staticsMemos);
     }
 
     @Transactional

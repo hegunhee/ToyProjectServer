@@ -38,7 +38,7 @@ public class MemoController {
         return new MemosSummaryResponse(new MemoResponses(memoResponses));
     }
 
-    @GetMapping("/v1/memos/{attribute}")
+    @GetMapping("/v1/memos/attribute/{attribute}")
     public AttributeMemoSummaryResponse findMemosByAttribute(
             @PathVariable("attribute") String attribute,
             @RequestParam("year") int year,
@@ -52,12 +52,12 @@ public class MemoController {
         return new AttributeMemoSummaryResponse(attribute,new MemoResponses(memoResponses));
     }
 
-    @GetMapping("/v1/memos/{type}")
-    public void findMemosByIncomeExponseType(
+    @GetMapping("/v1/memos/type/{type}")
+    public StaticsMemosResponse findMemosByIncomeExpenseType(
             @PathVariable("type") IncomeExpenseType type,
             @RequestParam("year") int year,
             @RequestParam("month") int month) {
-
+        return memoService.sumMemosPriceByIncomeExpenseType(type,year,month);
     }
 
     @PostMapping("/v1/memo")
