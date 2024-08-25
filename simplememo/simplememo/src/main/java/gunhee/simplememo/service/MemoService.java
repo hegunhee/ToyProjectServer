@@ -25,8 +25,14 @@ public class MemoService {
         return memo;
     }
 
-    public List<Memo> findMemosByDate(int year, int month) {
-        return memoRepository.findMemosByDate(year,month);
+    public List<Memo> findMemos(int year, int month) {
+        return memoRepository.findMemos(year, month);
+    }
+
+    public List<Memo> findMemosByAttribute(String attribute,int year, int month) {
+        return memoRepository.findMemosByAttribute(attribute,year,month);
+    }
+
     }
 
     @Transactional

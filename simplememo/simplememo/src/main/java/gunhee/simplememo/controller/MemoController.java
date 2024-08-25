@@ -1,15 +1,14 @@
 package gunhee.simplememo.controller;
 
+import gunhee.simplememo.domain.IncomeExpenseType;
 import gunhee.simplememo.domain.Memo;
-import gunhee.simplememo.dto.memo.MemoRequest;
-import gunhee.simplememo.dto.memo.MemoResponse;
+import gunhee.simplememo.dto.memo.*;
 import gunhee.simplememo.service.MemoService;
 import jakarta.validation.Valid;
 import lombok.Getter;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 public class MemoController {
@@ -27,15 +26,38 @@ public class MemoController {
     }
 
     @GetMapping("/v1/memos")
-    public List<MemoResponse> findMemos(
+    public MemosSummaryResponse findMemos(
             @RequestParam("year") int year,
-            @RequestParam("month") int month,
-            @RequestParam(value = "attribute",required = false) String attribute
-    ) {
-        List<Memo> memos = memoService.findMemosByDate(year, month);
-        return memos.stream()
+            @RequestParam("month") int month) {
+        List<Memo> memosByDate = memoService.findMemos(year, month);
+
+        List<MemoResponse> memoResponses = memosByDate.stream()
                 .map(MemoResponse::new)
-                .collect(Collectors.toList());
+                .toList();
+
+        return new MemosSummaryResponse(new MemoResponses(memoResponses));
+    }
+
+    @GetMapping("/v1/memos/{attribute}")
+    public AttributeMemoSummaryResponse findMemosByAttribute(
+            @PathVariable("attribute") String attribute,
+            @RequestParam("year") int year,
+            @RequestParam("month") int month) {
+        List<Memo> memosByAttribute = memoService.findMemosByAttribute(attribute, year, month);
+
+        List<MemoResponse> memoResponses = memosByAttribute.stream()
+                .map(MemoResponse::new)
+                .toList();
+
+        return new AttributeMemoSummaryResponse(attribute,new MemoResponses(memoResponses));
+    }
+
+    @GetMapping("/v1/memos/{type}")
+    public void findMemosByIncomeExponseType(
+            @PathVariable("type") IncomeExpenseType type,
+            @RequestParam("year") int year,
+            @RequestParam("month") int month) {
+
     }
 
     @PostMapping("/v1/memo")
