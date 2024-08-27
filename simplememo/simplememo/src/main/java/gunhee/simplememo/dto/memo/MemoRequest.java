@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Getter
 public class MemoRequest {
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd'T'HH:mm")
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private final LocalDateTime memoDate;
 
     private final IncomeExpenseType incomeExpenseType;
@@ -31,6 +31,7 @@ public class MemoRequest {
     @Size(max = 50,message = "50글자 이상이면 안됩니다.")
     private final String description;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private final BigDecimal price;
 
     @JsonCreator

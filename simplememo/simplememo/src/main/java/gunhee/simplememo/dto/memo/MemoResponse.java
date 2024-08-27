@@ -1,5 +1,6 @@
 package gunhee.simplememo.dto.memo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import gunhee.simplememo.domain.IncomeExpenseType;
 import gunhee.simplememo.domain.Memo;
 import lombok.Getter;
@@ -12,6 +13,7 @@ public class MemoResponse {
 
     private final Integer memoId;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private final LocalDateTime memoDate;
 
     private final IncomeExpenseType incomeExpenseType;
@@ -22,6 +24,7 @@ public class MemoResponse {
 
     private final String description;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private final BigDecimal price;
 
     public MemoResponse(Memo memo) {

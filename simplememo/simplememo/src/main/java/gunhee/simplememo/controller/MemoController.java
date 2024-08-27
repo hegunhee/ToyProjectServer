@@ -73,7 +73,7 @@ public class MemoController {
         return new MemoIdResponse(memoId);
     }
 
-    @DeleteMapping("vl/memo/{memoId}")
+    @DeleteMapping("v1/memo/{memoId}")
     public MemoIdResponse delete(@PathVariable("memoId") Integer memoId) {
         memoService.deleteById(memoId);
         return new MemoIdResponse(memoId);

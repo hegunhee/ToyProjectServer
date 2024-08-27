@@ -35,7 +35,7 @@ public class MemoQueryServiceTest {
         List<Memo> memos = getSampleMemos();
 
         //when
-        when(memoRepository.findMemosByAttribute("식비",dateNow.getYear(), dateNow.getYear()))
+        when(memoRepository.findMemosByAttribute("식비",dateNow.getYear(), dateNow.getMonthValue()))
                 .thenReturn(memos.stream()
                         .filter((memo) -> memo.getAttribute().equals("식비")).toList());
 

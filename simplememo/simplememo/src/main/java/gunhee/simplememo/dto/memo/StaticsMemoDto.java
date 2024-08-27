@@ -1,5 +1,6 @@
 package gunhee.simplememo.dto.memo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 
 import java.math.BigDecimal;
@@ -8,6 +9,7 @@ import java.math.BigDecimal;
 public class StaticsMemoDto {
     private final int percent;
     private final String attribute;
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private final BigDecimal price;
 
 
