@@ -32,6 +32,13 @@ public class ExceptionControllerAdvice {
         return new ErrorResponse(HttpStatus.BAD_REQUEST.value(),HttpStatus.BAD_REQUEST.toString(),message);
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ErrorResponse handleIllegalArgumentException(IllegalArgumentException e) {
+        log.error(e.getMessage());
+        return new ErrorResponse(HttpStatus.BAD_REQUEST.value(),HttpStatus.BAD_REQUEST.toString(),e.getMessage());
+    }
+
     private String getValidParameterMessage(Object[] messageArguments) {
         StringBuilder builder = new StringBuilder();
         for (Object messageArgument : messageArguments) {
