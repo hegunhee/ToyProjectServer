@@ -1,7 +1,7 @@
 package gunhee.simplememo.service;
 
-import gunhee.simplememo.domain.IncomeExpenseType;
-import gunhee.simplememo.domain.Memo;
+import gunhee.simplememo.domain.memo.IncomeExpenseType;
+import gunhee.simplememo.domain.memo.Memo;
 import gunhee.simplememo.dto.memo.StaticsMemoDto;
 import gunhee.simplememo.dto.memo.StaticsMemosResponse;
 import gunhee.simplememo.repository.MemoRepository;

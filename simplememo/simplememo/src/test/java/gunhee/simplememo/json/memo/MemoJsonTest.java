@@ -1,8 +1,8 @@
 package gunhee.simplememo.json.memo;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import gunhee.simplememo.domain.IncomeExpenseType;
-import gunhee.simplememo.domain.Memo;
+import gunhee.simplememo.domain.memo.IncomeExpenseType;
+import gunhee.simplememo.domain.memo.Memo;
 import gunhee.simplememo.dto.memo.MemoRequest;
 import gunhee.simplememo.json.memo.code.MemoObjectMapper;
 import lombok.extern.slf4j.Slf4j;
