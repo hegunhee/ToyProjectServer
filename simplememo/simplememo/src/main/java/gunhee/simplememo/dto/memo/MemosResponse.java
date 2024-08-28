@@ -1,16 +1,16 @@
 package gunhee.simplememo.dto.memo;
 
-import gunhee.simplememo.domain.IncomeExpenseType;
+import gunhee.simplememo.domain.memo.IncomeExpenseType;
 import gunhee.simplememo.dto.TotalSum;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-public class MemoResponses {
+public class MemosResponse {
 
     private final List<MemoResponse> memos;
 
-    public MemoResponses(List<MemoResponse> memos) {
+    public MemosResponse(List<MemoResponse> memos) {
         this.memos = memos;
     }
 

@@ -11,9 +11,9 @@ public class AttributeMemoSummaryResponse {
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     private final BigDecimal totalPrice;
     private final String attribute;
-    private final MemoResponses memos;
+    private final MemosResponse memos;
 
-    public AttributeMemoSummaryResponse(String attribute, MemoResponses memos) {
+    public AttributeMemoSummaryResponse(String attribute, MemosResponse memos) {
         this.totalPrice = memos.calculateAttributeSum(attribute);
         this.attribute = attribute;
         this.memos = memos;

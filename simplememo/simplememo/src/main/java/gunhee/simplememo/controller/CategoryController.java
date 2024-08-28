@@ -7,13 +7,11 @@ import gunhee.simplememo.dto.category.CategoryResponse;
 import gunhee.simplememo.service.CategoryService;
 import jakarta.validation.Valid;
 import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@Slf4j
 public class CategoryController {
 
     private final CategoryService categoryService;
@@ -24,12 +22,11 @@ public class CategoryController {
 
     @GetMapping("/v1/category/{categoryName}")
     public CategoryResponse findOne(@PathVariable("categoryName") String name) {
-        log.info("name ={}",name);
         Category findCategory = categoryService.findOne(name);
         return new CategoryResponse(findCategory.getType(),findCategory.getName());
     }
 
-    @GetMapping("/v1/category/categoryType/{categoryType}")
+    @GetMapping("/v1/categories/categoryType/{categoryType}")
     public CategoryNamesResponse findAllBy(@PathVariable("categoryType") CategoryType type) {
         List<String> categoryNames = categoryService.findAllBy(type);
         return new CategoryNamesResponse(type,categoryNames);

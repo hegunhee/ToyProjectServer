@@ -1,7 +1,7 @@
 package gunhee.simplememo.controller;
 
-import gunhee.simplememo.domain.IncomeExpenseType;
-import gunhee.simplememo.domain.Memo;
+import gunhee.simplememo.domain.memo.IncomeExpenseType;
+import gunhee.simplememo.domain.memo.Memo;
 import gunhee.simplememo.dto.memo.*;
 import gunhee.simplememo.service.MemoService;
 import jakarta.validation.Valid;
@@ -35,7 +35,7 @@ public class MemoController {
                 .map(MemoResponse::new)
                 .toList();
 
-        return new MemosSummaryResponse(new MemoResponses(memoResponses));
+        return new MemosSummaryResponse(new MemosResponse(memoResponses));
     }
 
     @GetMapping("/v1/memos/attribute/{attribute}")
@@ -49,7 +49,7 @@ public class MemoController {
                 .map(MemoResponse::new)
                 .toList();
 
-        return new AttributeMemoSummaryResponse(attribute,new MemoResponses(memoResponses));
+        return new AttributeMemoSummaryResponse(attribute,new MemosResponse(memoResponses));
     }
 
     @GetMapping("/v1/memos/type/{type}")

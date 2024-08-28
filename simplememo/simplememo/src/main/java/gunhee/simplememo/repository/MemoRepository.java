@@ -1,7 +1,7 @@
 package gunhee.simplememo.repository;
 
-import gunhee.simplememo.domain.IncomeExpenseType;
-import gunhee.simplememo.domain.Memo;
+import gunhee.simplememo.domain.memo.IncomeExpenseType;
+import gunhee.simplememo.domain.memo.Memo;
 import gunhee.simplememo.dto.memo.StaticsMemoDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

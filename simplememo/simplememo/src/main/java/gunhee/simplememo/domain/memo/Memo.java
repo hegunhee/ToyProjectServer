@@ -1,4 +1,4 @@
-package gunhee.simplememo.domain;
+package gunhee.simplememo.domain.memo;
 
 import jakarta.persistence.*;
 import lombok.Getter;

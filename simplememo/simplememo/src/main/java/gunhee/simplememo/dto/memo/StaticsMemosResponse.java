@@ -1,7 +1,7 @@
 package gunhee.simplememo.dto.memo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import gunhee.simplememo.domain.IncomeExpenseType;
+import gunhee.simplememo.domain.memo.IncomeExpenseType;
 import lombok.Getter;
 
 import java.math.BigDecimal;

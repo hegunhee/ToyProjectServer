@@ -7,9 +7,9 @@ import lombok.Getter;
 public class MemosSummaryResponse {
 
     private final TotalSum totalSum;
-    private final MemoResponses memos;
+    private final MemosResponse memos;
 
-    public MemosSummaryResponse(MemoResponses memos) {
+    public MemosSummaryResponse(MemosResponse memos) {
         this.totalSum = memos.calculateTotalSum();
         this.memos = memos;
     }
