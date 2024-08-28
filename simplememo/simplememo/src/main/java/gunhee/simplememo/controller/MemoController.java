@@ -4,6 +4,9 @@ import gunhee.simplememo.domain.memo.IncomeExpenseType;
 import gunhee.simplememo.domain.memo.Memo;
 import gunhee.simplememo.dto.memo.*;
 import gunhee.simplememo.service.MemoService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.Getter;
 import org.springframework.web.bind.annotation.*;
@@ -19,12 +22,19 @@ public class MemoController {
         this.memoService = memoService;
     }
 
+    @Operation(summary = "가계부 조회", description = "메모 아이디를 기반으로 특정 가계부 조회")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "성공"),
+            @ApiResponse(responseCode = "404", description = "저장되어있지 않은 가계부입니다.")
+
+    })
     @GetMapping("/v1/memo/{memoId}")
     public MemoResponse findMemo(@PathVariable("memoId") Integer memoId) {
         Memo findMemo = memoService.findOne(memoId);
         return new MemoResponse(findMemo);
     }
 
+    @Operation(summary = "가계부 조회", description = "년도와 월을 기반으로 가계부 조회")
     @GetMapping("/v1/memos")
     public MemosSummaryResponse findMemos(
             @RequestParam("year") int year,
@@ -38,6 +48,7 @@ public class MemoController {
         return new MemosSummaryResponse(new MemosResponse(memoResponses));
     }
 
+    @Operation(summary = "분류를 기반으로 가계부 조회", description = "분류를 기반으로 가계부 조회")
     @GetMapping("/v1/memos/attribute/{attribute}")
     public AttributeMemoSummaryResponse findMemosByAttribute(
             @PathVariable("attribute") String attribute,
@@ -52,6 +63,7 @@ public class MemoController {
         return new AttributeMemoSummaryResponse(attribute,new MemosResponse(memoResponses));
     }
 
+    @Operation(summary = "수입/지출 타입 기반으로 가계부 조회", description = "수입/지출 타입 기반으로 가계부 조회")
     @GetMapping("/v1/memos/type/{type}")
     public StaticsMemosResponse findMemosByIncomeExpenseType(
             @PathVariable("type") IncomeExpenseType type,
@@ -60,6 +72,11 @@ public class MemoController {
         return memoService.findStaticsMemo(type,year,month);
     }
 
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "성공"),
+            @ApiResponse(responseCode = "400", description = "중복된 가계부입니다.")
+
+    })
     @PostMapping("/v1/memo")
     public MemoIdResponse save(@RequestBody @Valid MemoRequest memoRequest) {
         Memo memo = memoRequest.toEntity();
@@ -67,6 +84,11 @@ public class MemoController {
         return new MemoIdResponse(memoId);
     }
 
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "성공"),
+            @ApiResponse(responseCode = "404", description = "저장되어있지 않은 가계부입니다.")
+
+    })
     @PatchMapping("/v1/memo/{memoId}")
     public MemoIdResponse update(@PathVariable("memoId") Integer memoId, @RequestBody @Valid MemoRequest memoRequest) {
         memoService.update(memoId,memoRequest.toEntity());

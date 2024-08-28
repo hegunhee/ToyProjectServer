@@ -4,10 +4,13 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gunhee.simplememo.domain.category.Category;
 import gunhee.simplememo.domain.category.CategoryType;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 
+
+@Schema(description = "카테고리 요청 DTO")
 @Getter
 public class CategoryRequest {
 

@@ -2,11 +2,13 @@ package gunhee.simplememo.dto.memo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import gunhee.simplememo.domain.memo.IncomeExpenseType;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.util.List;
 
+@Schema(description = "통계 가계부, 타입, 년도와 월, 총 금액 DTO")
 @Getter
 public class StaticsMemosResponse {
 

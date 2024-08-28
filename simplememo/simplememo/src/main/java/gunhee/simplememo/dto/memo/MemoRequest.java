@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gunhee.simplememo.domain.memo.IncomeExpenseType;
 import gunhee.simplememo.domain.memo.Memo;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -12,12 +13,15 @@ import lombok.Getter;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+@Schema(description = "가계부 등록DTO")
 @Getter
 public class MemoRequest {
 
+    @Schema(description = "가계부에 저장된 날짜",type = "LocalDateTime",example="yyyy-MM-dd'T'HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private final LocalDateTime memoDate;
 
+    @Schema(description = "수입/지출 타입",type = "String",example="INCOME")
     private final IncomeExpenseType incomeExpenseType;
 
     @NotBlank(message = "분류는 빈값이 될 수 없습니다.")
