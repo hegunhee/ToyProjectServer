@@ -6,12 +6,10 @@ import gunhee.simplememo.dto.memo.StaticsMemoDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-@Repository
 public interface MemoRepository extends JpaRepository<Memo,Integer> {
 
     @Query("select m from Memo m where YEAR(m.memoDate) = :year AND MONTH(m.memoDate) = :month ORDER BY DAY(m.memoDate) DESC")
