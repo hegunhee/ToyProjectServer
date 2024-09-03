@@ -3,6 +3,8 @@ package gunhee.simplememo.service;
 import gunhee.simplememo.domain.category.Category;
 import gunhee.simplememo.domain.category.CategoryType;
 import gunhee.simplememo.repository.CategoryRepository;
+import gunhee.simplememo.service.category.CategoryService;
+import gunhee.simplememo.service.category.ReadCategoryService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,6 +27,9 @@ class CategoryServiceTest {
     @InjectMocks
     private CategoryService categoryService;
 
+    @InjectMocks
+    private ReadCategoryService readCategoryService;
+
     @Mock
     private CategoryRepository categoryRepository;
 
@@ -36,7 +41,7 @@ class CategoryServiceTest {
         //when
         when(categoryRepository.findById(category.getName())).thenReturn(Optional.of(category));
 
-        Category result = categoryService.findOne(category.getName());
+        Category result = readCategoryService.findById(category.getName());
         //then
         assertThat(category.getName()).isEqualTo(result.getName());
         assertThat(category.getType()).isEqualTo(result.getType());
@@ -52,7 +57,7 @@ class CategoryServiceTest {
         when(categoryRepository.findById(category.getName())).thenReturn(Optional.empty());
 
         //then
-        Assertions.assertThrows(NoSuchElementException.class,() -> categoryService.findOne(category.getName()));
+        Assertions.assertThrows(NoSuchElementException.class,() -> readCategoryService.findById(category.getName()));
     }
 
     @Test
@@ -67,7 +72,7 @@ class CategoryServiceTest {
         //when
         when(categoryRepository.findAllByCategoryType(CategoryType.ATTR_INCOME)).thenReturn(incomeCategoryNames);
 
-        List<String> result = categoryService.findAllBy(CategoryType.ATTR_INCOME);
+        List<String> result = readCategoryService.findAllByCategoryType(CategoryType.ATTR_INCOME);
 
         //then
         assertThat(result.size()).isEqualTo(2);
@@ -82,8 +87,8 @@ class CategoryServiceTest {
         when(categoryRepository.existsByName(category.getName())).thenReturn(true);
         when(categoryRepository.existsByName(unknownName)).thenReturn(false);
 
-        boolean resultExist = categoryService.existsBy(category.getName());
-        boolean resultNotExist = categoryService.existsBy(unknownName);
+        boolean resultExist = readCategoryService.existsById(category.getName());
+        boolean resultNotExist = readCategoryService.existsById(unknownName);
         //then
         assertThat(resultExist).isTrue();
         assertThat(resultNotExist).isFalse();

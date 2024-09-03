@@ -3,6 +3,8 @@ package gunhee.simplememo.service;
 import gunhee.simplememo.domain.memo.IncomeExpenseType;
 import gunhee.simplememo.domain.memo.Memo;
 import gunhee.simplememo.repository.MemoRepository;
+import gunhee.simplememo.service.memo.MemoService;
+import gunhee.simplememo.service.memo.ReadMemoService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,6 +28,9 @@ class MemoServiceTest {
     @InjectMocks
     private MemoService memoService;
 
+    @InjectMocks
+    private ReadMemoService readMemoService;
+
     @Mock
     private MemoRepository memoRepository;
 
@@ -38,7 +43,7 @@ class MemoServiceTest {
         doReturn(1).when(memo).getId();
         when(memoRepository.findById(memo.getId())).thenReturn(Optional.of(memo));
 
-        Memo result = memoService.findOne(memo.getId());
+        Memo result = readMemoService.findById(memo.getId());
 
         //then
         assertThat(date).isEqualTo(result.getMemoDate());
@@ -54,7 +59,7 @@ class MemoServiceTest {
 
         //then
         Assertions.assertThrows(NoSuchElementException.class,() -> {
-            memoService.findOne(100);
+            readMemoService.findById(100);
         });
 
     }
@@ -84,7 +89,7 @@ class MemoServiceTest {
         doReturn(1).when(memo).getId();
         when(memoRepository.findById(memo.getId())).thenReturn(Optional.of(memo));
 
-        Memo result = memoService.findOne(memo.getId());
+        Memo result = readMemoService.findById(memo.getId());
         result.update(updateMemo);
 
         //then

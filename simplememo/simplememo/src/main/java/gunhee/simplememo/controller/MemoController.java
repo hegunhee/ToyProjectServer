@@ -3,7 +3,8 @@ package gunhee.simplememo.controller;
 import gunhee.simplememo.domain.memo.IncomeExpenseType;
 import gunhee.simplememo.domain.memo.Memo;
 import gunhee.simplememo.dto.memo.*;
-import gunhee.simplememo.service.MemoService;
+import gunhee.simplememo.service.memo.MemoService;
+import gunhee.simplememo.service.memo.ReadMemoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -16,9 +17,11 @@ import java.util.List;
 public class MemoController {
 
     private final MemoService memoService;
+    private final ReadMemoService readMemoService;
 
-    public MemoController(MemoService memoService) {
+    public MemoController(MemoService memoService, ReadMemoService readMemoService) {
         this.memoService = memoService;
+        this.readMemoService = readMemoService;
     }
 
     @Operation(summary = "가계부 조회", description = "메모 아이디를 기반으로 특정 가계부 조회")
@@ -29,7 +32,7 @@ public class MemoController {
     })
     @GetMapping("/v1/memo/{memoId}")
     public MemoResponse findMemo(@PathVariable("memoId") Integer memoId) {
-        Memo findMemo = memoService.findOne(memoId);
+        Memo findMemo = readMemoService.findById(memoId);
         return new MemoResponse(findMemo);
     }
 
@@ -38,7 +41,7 @@ public class MemoController {
     public MemosSummaryResponse findMemos(
             @RequestParam("year") int year,
             @RequestParam("month") int month) {
-        List<Memo> memosByDate = memoService.findMemos(year, month);
+        List<Memo> memosByDate = readMemoService.findMemos(year, month);
 
         List<MemoResponse> memoResponses = memosByDate.stream()
                 .map(MemoResponse::new)
@@ -53,7 +56,7 @@ public class MemoController {
             @PathVariable("attribute") String attribute,
             @RequestParam("year") int year,
             @RequestParam("month") int month) {
-        List<Memo> memosByAttribute = memoService.findMemosByAttribute(attribute, year, month);
+        List<Memo> memosByAttribute = readMemoService.findMemosByAttribute(attribute, year, month);
 
         List<MemoResponse> memoResponses = memosByAttribute.stream()
                 .map(MemoResponse::new)
@@ -68,7 +71,7 @@ public class MemoController {
             @PathVariable("type") IncomeExpenseType type,
             @RequestParam("year") int year,
             @RequestParam("month") int month) {
-        return memoService.findStaticsMemo(type,year,month);
+        return readMemoService.findStaticsMemo(type,year,month);
     }
 
     @ApiResponses({

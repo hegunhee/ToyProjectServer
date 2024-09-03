@@ -6,7 +6,8 @@ import gunhee.simplememo.dto.category.CategoryNameResponse;
 import gunhee.simplememo.dto.category.CategoryNamesResponse;
 import gunhee.simplememo.dto.category.CategoryRequest;
 import gunhee.simplememo.dto.category.CategoryResponse;
-import gunhee.simplememo.service.CategoryService;
+import gunhee.simplememo.service.category.CategoryService;
+import gunhee.simplememo.service.category.ReadCategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -21,9 +22,11 @@ import java.util.List;
 public class CategoryController {
 
     private final CategoryService categoryService;
+    private final ReadCategoryService readCategoryService;
 
-    public CategoryController(CategoryService categoryService) {
+    public CategoryController(CategoryService categoryService, ReadCategoryService readCategoryService) {
         this.categoryService = categoryService;
+        this.readCategoryService = readCategoryService;
     }
 
     @Operation(summary = "카테고리 검색", description = "카테고리 이름을 바탕으로 카테고리 검색")
@@ -32,22 +35,22 @@ public class CategoryController {
             @ApiResponse(responseCode = "404", description = "저장되어있지 않은 카테고리입니다.")
     })
     @GetMapping("/v1/category/{categoryName}")
-    public CategoryResponse findOne(@PathVariable("categoryName") String name) {
-        Category findCategory = categoryService.findOne(name);
+    public CategoryResponse findById(@PathVariable("categoryName") String name) {
+        Category findCategory = readCategoryService.findById(name);
         return new CategoryResponse(findCategory.getType(),findCategory.getName());
     }
 
     @Operation(summary = "카테고리들 검색", description = "카테고리 타입을 기반으로 모든 카테고리 검색")
     @GetMapping("/v1/categories/categoryType/{categoryType}")
-    public CategoryNamesResponse findAllBy(@PathVariable("categoryType") CategoryType type) {
-        List<String> categoryNames = categoryService.findAllBy(type);
+    public CategoryNamesResponse findAllByCategoryType(@PathVariable("categoryType") CategoryType type) {
+        List<String> categoryNames = readCategoryService.findAllByCategoryType(type);
         return new CategoryNamesResponse(type,categoryNames);
     }
 
     @Operation(summary = "카테고리 유무 조회", description = "이름을 기반으로 해당 카테고리가 있는지 boolean값으로 반환")
     @GetMapping("/v1/category/existence/{categoryName}")
     public boolean existsBy(@PathVariable("categoryName") String name) {
-        return categoryService.existsBy(name);
+        return readCategoryService.existsById(name);
     }
 
     @ApiResponses({

@@ -1,4 +1,4 @@
-package gunhee.simplememo.service;
+package gunhee.simplememo.service.memo;
 
 import gunhee.simplememo.domain.memo.IncomeExpenseType;
 import gunhee.simplememo.domain.memo.Memo;
@@ -12,17 +12,17 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-@Service
 @Transactional(readOnly = true)
-public class MemoService {
+@Service
+public class ReadMemoService {
 
     private final MemoRepository memoRepository;
 
-    public MemoService(MemoRepository memoRepository) {
+    public ReadMemoService(MemoRepository memoRepository) {
         this.memoRepository = memoRepository;
     }
 
-    public Memo findOne(Integer memoId) {
+    public Memo findById(Integer memoId) {
         Memo memo = memoRepository.findById(memoId).orElseThrow(() -> {
             throw new NoSuchElementException("메모를 찾지 못했습니다.");
         });
@@ -41,26 +41,5 @@ public class MemoService {
         BigDecimal sums = memoRepository.sumMemoPricesByIncomeExpenseType(type, year, month);
         List<StaticsMemoDto> staticsMemos = memoRepository.findMemosByIncomeExpenseType(sums, type, year, month);
         return new StaticsMemosResponse(type,year,month,sums,staticsMemos);
-    }
-
-    @Transactional
-    public Integer save(Memo memo) {
-        Memo savedMemo = memoRepository.save(memo);
-        return savedMemo.getId();
-    }
-
-    @Transactional
-    public Integer update(Integer memoId, Memo updatedMemo) {
-        Memo memo = memoRepository.findById(memoId).orElseThrow(() -> {
-            throw new NoSuchElementException("업데이트하려는 메모가 존재하지않습니다.");
-        });
-        memo.update(updatedMemo);
-        return memoId;
-    }
-
-    @Transactional
-    public Integer deleteById(Integer memoId) {
-        memoRepository.deleteById(memoId);
-        return memoId;
     }
 }

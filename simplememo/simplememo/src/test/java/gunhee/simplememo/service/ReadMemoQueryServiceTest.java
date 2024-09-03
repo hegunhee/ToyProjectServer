@@ -5,6 +5,7 @@ import gunhee.simplememo.domain.memo.Memo;
 import gunhee.simplememo.dto.memo.StaticsMemoDto;
 import gunhee.simplememo.dto.memo.StaticsMemosResponse;
 import gunhee.simplememo.repository.MemoRepository;
+import gunhee.simplememo.service.memo.ReadMemoService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -19,10 +20,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class MemoQueryServiceTest {
+public class ReadMemoQueryServiceTest {
 
     @InjectMocks
-    private MemoService memoService;
+    private ReadMemoService readMemoService;
 
     @Mock
     private MemoRepository memoRepository;
@@ -39,7 +40,7 @@ public class MemoQueryServiceTest {
                 .thenReturn(memos.stream()
                         .filter((memo) -> memo.getAttribute().equals("식비")).toList());
 
-        List<Memo> result = memoService.findMemosByAttribute("식비", dateNow.getYear(),dateNow.getMonthValue());
+        List<Memo> result = readMemoService.findMemosByAttribute("식비", dateNow.getYear(),dateNow.getMonthValue());
         BigDecimal sum = result.stream()
                 .map(Memo::getPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
@@ -64,7 +65,7 @@ public class MemoQueryServiceTest {
         when(memoRepository.findMemosByIncomeExpenseType(totalSum,IncomeExpenseType.EXPENSE,dateNow.getYear(),dateNow.getMonthValue()))
                 .thenReturn(getSampleStaticsMemos());
         //then
-        StaticsMemosResponse staticsResponse = memoService.findStaticsMemo(IncomeExpenseType.EXPENSE, dateNow.getYear(), dateNow.getMonthValue());
+        StaticsMemosResponse staticsResponse = readMemoService.findStaticsMemo(IncomeExpenseType.EXPENSE, dateNow.getYear(), dateNow.getMonthValue());
 
         assertThat(staticsResponse.getStaticsMemos().size()).isEqualTo(1);
         assertThat(staticsResponse.getType()).isEqualTo(IncomeExpenseType.EXPENSE);
