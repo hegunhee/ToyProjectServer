@@ -12,6 +12,7 @@ public class AttributeMemoSummaryResponse {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     private final BigDecimal totalPrice;
+
     private final String attribute;
     private final MemosResponse memos;
 

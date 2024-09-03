@@ -2,7 +2,6 @@ package gunhee.simplememo.dto.category;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import gunhee.simplememo.domain.category.Category;
 import gunhee.simplememo.domain.category.CategoryType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
@@ -24,9 +23,5 @@ public class CategoryRequest {
     public CategoryRequest(@JsonProperty("type") CategoryType type,@JsonProperty("name") String name) {
         this.type = type;
         this.name = name;
-    }
-
-    public Category toEntity() {
-        return new Category(this.type,this.name);
     }
 }

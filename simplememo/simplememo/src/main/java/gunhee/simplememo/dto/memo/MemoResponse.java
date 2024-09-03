@@ -23,9 +23,7 @@ public class MemoResponse {
     private final IncomeExpenseType incomeExpenseType;
 
     private final String attribute;
-
     private final String asset;
-
     private final String description;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING)

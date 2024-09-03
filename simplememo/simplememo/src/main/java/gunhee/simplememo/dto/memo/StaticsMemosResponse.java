@@ -15,8 +15,10 @@ public class StaticsMemosResponse {
     private final IncomeExpenseType type;
     private final int year;
     private final int month;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     private final BigDecimal totalPrice;
+
     private final List<StaticsMemoDto> staticsMemos;
 
     public StaticsMemosResponse(IncomeExpenseType type, int year, int month, BigDecimal totalPrice, List<StaticsMemoDto> staticsMemos) {
