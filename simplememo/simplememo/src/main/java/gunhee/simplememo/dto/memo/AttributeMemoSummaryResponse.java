@@ -16,8 +16,8 @@ public class AttributeMemoSummaryResponse {
     private final String attribute;
     private final MemosResponse memos;
 
-    public AttributeMemoSummaryResponse(String attribute, MemosResponse memos) {
-        this.totalPrice = memos.calculateAttributeSum(attribute);
+    public AttributeMemoSummaryResponse(BigDecimal totalPrice, String attribute, MemosResponse memos) {
+        this.totalPrice = totalPrice;
         this.attribute = attribute;
         this.memos = memos;
     }

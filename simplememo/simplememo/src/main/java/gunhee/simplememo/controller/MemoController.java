@@ -2,6 +2,8 @@ package gunhee.simplememo.controller;
 
 import gunhee.simplememo.domain.memo.IncomeExpenseType;
 import gunhee.simplememo.domain.memo.Memo;
+import gunhee.simplememo.domain.memo.MemosVO;
+import gunhee.simplememo.dto.TotalSum;
 import gunhee.simplememo.dto.memo.*;
 import gunhee.simplememo.service.memo.MemoService;
 import gunhee.simplememo.service.memo.ReadMemoService;
@@ -11,6 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -43,11 +46,12 @@ public class MemoController {
             @RequestParam("month") int month) {
         List<Memo> memosByDate = readMemoService.findMemos(year, month);
 
-        List<MemoResponse> memoResponses = memosByDate.stream()
-                .map(MemoResponse::new)
-                .toList();
+        MemosVO memosVO = new MemosVO(memosByDate);
 
-        return new MemosSummaryResponse(new MemosResponse(memoResponses));
+        TotalSum totalSum = memosVO.calculateTotalSum();
+        MemosResponse memosResponse = memosVO.toMemosResponses();
+
+        return new MemosSummaryResponse(totalSum,memosResponse);
     }
 
     @Operation(summary = "분류를 기반으로 가계부 조회", description = "분류를 기반으로 가계부 조회")
@@ -58,11 +62,12 @@ public class MemoController {
             @RequestParam("month") int month) {
         List<Memo> memosByAttribute = readMemoService.findMemosByAttribute(attribute, year, month);
 
-        List<MemoResponse> memoResponses = memosByAttribute.stream()
-                .map(MemoResponse::new)
-                .toList();
+        MemosVO memosVO = new MemosVO(memosByAttribute);
 
-        return new AttributeMemoSummaryResponse(attribute,new MemosResponse(memoResponses));
+        BigDecimal totalPrice = memosVO.calculateAttributeSum(attribute);
+        MemosResponse memoResponses = memosVO.toMemosResponses();
+
+        return new AttributeMemoSummaryResponse(totalPrice,attribute,memoResponses);
     }
 
     @Operation(summary = "수입/지출 타입 기반으로 가계부 조회", description = "수입/지출 타입 기반으로 가계부 조회")

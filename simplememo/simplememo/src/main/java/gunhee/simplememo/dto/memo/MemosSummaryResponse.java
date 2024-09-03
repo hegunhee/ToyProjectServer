@@ -11,8 +11,8 @@ public class MemosSummaryResponse {
     private final TotalSum totalSum;
     private final MemosResponse memos;
 
-    public MemosSummaryResponse(MemosResponse memos) {
-        this.totalSum = memos.calculateTotalSum();
+    public MemosSummaryResponse(TotalSum totalSum,MemosResponse memos) {
+        this.totalSum = totalSum;
         this.memos = memos;
     }
 }
