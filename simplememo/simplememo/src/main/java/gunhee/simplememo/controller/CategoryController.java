@@ -2,6 +2,8 @@ package gunhee.simplememo.controller;
 
 import gunhee.simplememo.domain.category.Category;
 import gunhee.simplememo.domain.category.CategoryType;
+import gunhee.simplememo.dto.category.CategoryNameResponse;
+import gunhee.simplememo.dto.category.CategoryNamesResponse;
 import gunhee.simplememo.dto.category.CategoryRequest;
 import gunhee.simplememo.dto.category.CategoryResponse;
 import gunhee.simplememo.service.CategoryService;
@@ -10,7 +12,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import lombok.Getter;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,7 +30,6 @@ public class CategoryController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공"),
             @ApiResponse(responseCode = "404", description = "저장되어있지 않은 카테고리입니다.")
-
     })
     @GetMapping("/v1/category/{categoryName}")
     public CategoryResponse findOne(@PathVariable("categoryName") String name) {
@@ -53,7 +53,6 @@ public class CategoryController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공"),
             @ApiResponse(responseCode = "400", description = "중복된 가계부입니다.")
-
     })
     @Operation(summary = "카테고리 저장", description = "카테고리 저장")
     @PostMapping("/v1/category")
@@ -67,28 +66,5 @@ public class CategoryController {
     public CategoryNameResponse delete(@PathVariable("categoryName") String name) {
         String deletedName = categoryService.delete(name);
         return new CategoryNameResponse(deletedName);
-    }
-
-
-    @Getter
-    static class CategoryNamesResponse {
-
-        private final CategoryType type;
-        private final List<String> names;
-
-        public CategoryNamesResponse(CategoryType type, List<String> names) {
-            this.type = type;
-            this.names = names;
-        }
-    }
-
-    @Getter
-    static class CategoryNameResponse {
-
-        private final String name;
-
-        public CategoryNameResponse(String name) {
-            this.name = name;
-        }
     }
 }

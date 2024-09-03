@@ -8,7 +8,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
-import lombok.Getter;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -99,15 +98,5 @@ public class MemoController {
     public MemoIdResponse delete(@PathVariable("memoId") Integer memoId) {
         memoService.deleteById(memoId);
         return new MemoIdResponse(memoId);
-    }
-
-    @Getter
-    static class MemoIdResponse {
-
-        private final Integer memoId;
-
-        public MemoIdResponse(Integer memoId) {
-            this.memoId = memoId;
-        }
     }
 }
