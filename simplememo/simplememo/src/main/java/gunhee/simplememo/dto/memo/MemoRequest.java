@@ -40,7 +40,7 @@ public class MemoRequest {
 
     @JsonCreator
     public MemoRequest(
-            @JsonProperty("memoOate")  LocalDateTime memoDate,
+            @JsonProperty("memoDate")  LocalDateTime memoDate,
             @JsonProperty("incomeExpenseType")  IncomeExpenseType incomeExpenseType,
             @JsonProperty("attribute")  String attribute,
             @JsonProperty("asset")  String asset,
