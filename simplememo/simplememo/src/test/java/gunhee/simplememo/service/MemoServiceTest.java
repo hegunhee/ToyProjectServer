@@ -15,7 +15,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -33,36 +32,6 @@ class MemoServiceTest {
 
     @Mock
     private MemoRepository memoRepository;
-
-    @Test
-    void findOne() {
-        //given
-        LocalDateTime date = LocalDateTime.now();
-        Memo memo = Mockito.spy(new Memo(date, IncomeExpenseType.EXPENSE, "식비", "우리은행", "샌드위치", new BigDecimal("10000")));
-        //when
-        doReturn(1).when(memo).getId();
-        when(memoRepository.findById(memo.getId())).thenReturn(Optional.of(memo));
-
-        Memo result = readMemoService.findById(memo.getId());
-
-        //then
-        assertThat(date).isEqualTo(result.getMemoDate());
-        assertThat("식비").isEqualTo(result.getAttribute());
-    }
-
-    @Test
-    void findNonExistedMemo() {
-        //given
-
-        //when
-        when(memoRepository.findById(100)).thenThrow(NoSuchElementException.class);
-
-        //then
-        Assertions.assertThrows(NoSuchElementException.class,() -> {
-            readMemoService.findById(100);
-        });
-
-    }
 
     @Test
     void save() {

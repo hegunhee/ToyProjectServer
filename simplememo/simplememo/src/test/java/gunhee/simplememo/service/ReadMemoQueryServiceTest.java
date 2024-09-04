@@ -6,6 +6,7 @@ import gunhee.simplememo.dto.memo.StaticsMemoDto;
 import gunhee.simplememo.dto.memo.StaticsMemosResponse;
 import gunhee.simplememo.repository.MemoRepository;
 import gunhee.simplememo.service.memo.ReadMemoService;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -33,20 +34,24 @@ public class ReadMemoQueryServiceTest {
     @Test
     public void findMemosByAttributeTest() {
         //given
+        String attribute = "식비";
         List<Memo> memos = getSampleMemos();
 
         //when
-        when(memoRepository.findMemosByAttribute("식비",dateNow.getYear(), dateNow.getMonthValue()))
+        when(memoRepository.findMemosByAttribute(attribute,dateNow.getYear(), dateNow.getMonthValue()))
                 .thenReturn(memos.stream()
-                        .filter((memo) -> memo.getAttribute().equals("식비")).toList());
+                        .filter((memo) -> memo.getAttribute().equals(attribute)).toList());
 
-        List<Memo> result = readMemoService.findMemosByAttribute("식비", dateNow.getYear(),dateNow.getMonthValue());
-        BigDecimal sum = result.stream()
+        List<Memo> memosResult = readMemoService.findMemosByAttribute(attribute, dateNow.getYear(),dateNow.getMonthValue());
+        BigDecimal sum = memosResult.stream()
                 .map(Memo::getPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+
         //then
-        assertThat(result.size()).isEqualTo(2);
-        assertThat(sum.intValue()).isEqualTo(13000);
+        Assertions.assertAll(
+                () -> assertThat(memosResult.size()).isEqualTo(2),
+                () -> assertThat(sum.intValue()).isEqualTo(13000)
+        );
     }
 
     @Test
@@ -64,12 +69,15 @@ public class ReadMemoQueryServiceTest {
         BigDecimal totalSum = memoRepository.sumMemoPricesByIncomeExpenseType(IncomeExpenseType.EXPENSE, dateNow.getYear(), dateNow.getMonthValue());
         when(memoRepository.findMemosByIncomeExpenseType(totalSum,IncomeExpenseType.EXPENSE,dateNow.getYear(),dateNow.getMonthValue()))
                 .thenReturn(getSampleStaticsMemos());
+
         //then
         StaticsMemosResponse staticsResponse = readMemoService.findStaticsMemo(IncomeExpenseType.EXPENSE, dateNow.getYear(), dateNow.getMonthValue());
 
-        assertThat(staticsResponse.getStaticsMemos().size()).isEqualTo(1);
-        assertThat(staticsResponse.getType()).isEqualTo(IncomeExpenseType.EXPENSE);
-        assertThat(staticsResponse.getTotalPrice()).isEqualTo(BigDecimal.valueOf(13000));
+        Assertions.assertAll(
+                () -> assertThat(staticsResponse.getStaticsMemos().size()).isEqualTo(1),
+                () -> assertThat(staticsResponse.getType()).isEqualTo(IncomeExpenseType.EXPENSE),
+                () -> assertThat(staticsResponse.getTotalPrice()).isEqualTo(BigDecimal.valueOf(13000))
+        );
     }
 
     private List<Memo> getSampleMemos() {
