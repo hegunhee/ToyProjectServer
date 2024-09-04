@@ -49,12 +49,27 @@ public class Memo {
         this.price = price;
     }
 
-    public void update(Memo updatedMemo) {
-        memoDate = updatedMemo.getMemoDate();
-        incomeExpenseType = updatedMemo.getIncomeExpenseType();
-        attribute = updatedMemo.getAttribute();
-        asset = updatedMemo.getAsset();
-        description = updatedMemo.getDescription();
-        price = updatedMemo.getPrice();
+    public void updateDate(LocalDateTime memoDate) {
+        this.memoDate = memoDate;
+    }
+
+    public void updateIncomeExpenseType(IncomeExpenseType incomeExpenseType) {
+        this.incomeExpenseType = incomeExpenseType;
+    }
+
+    public void updateAttribute(String attribute) {
+        this.attribute = attribute;
+    }
+
+    public void updateAsset(String asset) {
+        this.asset = asset;
+    }
+
+    public void updateDescription(String description) {
+        this.description = description;
+    }
+
+    public void updatePrice(BigDecimal price) {
+        this.price = price;
     }
 }

@@ -17,22 +17,26 @@ public class MemoService {
         this.memoRepository = memoRepository;
     }
 
-    @Transactional
     public Integer save(Memo memo) {
         Memo savedMemo = memoRepository.save(memo);
         return savedMemo.getId();
     }
 
-    @Transactional
     public Integer update(Integer memoId, Memo updatedMemo) {
-        Memo memo = memoRepository.findById(memoId).orElseThrow(() -> {
+        Memo persistedMemo = memoRepository.findById(memoId).orElseThrow(() -> {
             throw new NoSuchElementException("업데이트하려는 메모가 존재하지않습니다.");
         });
-        memo.update(updatedMemo);
+
+        persistedMemo.updateDate(updatedMemo.getMemoDate());
+        persistedMemo.updateIncomeExpenseType(updatedMemo.getIncomeExpenseType());
+        persistedMemo.updateAttribute(updatedMemo.getAttribute());
+        persistedMemo.updateAsset(updatedMemo.getAsset());
+        persistedMemo.updatePrice(updatedMemo.getPrice());
+        persistedMemo.updateDescription(updatedMemo.getDescription());
+
         return memoId;
     }
 
-    @Transactional
     public Integer deleteById(Integer memoId) {
         memoRepository.deleteById(memoId);
         return memoId;

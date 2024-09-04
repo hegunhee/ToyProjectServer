@@ -90,11 +90,19 @@ class MemoServiceTest {
         when(memoRepository.findById(memo.getId())).thenReturn(Optional.of(memo));
 
         Memo result = readMemoService.findById(memo.getId());
-        result.update(updateMemo);
+
+        result.updateDate(updateMemo.getMemoDate());
+        result.updateIncomeExpenseType(updateMemo.getIncomeExpenseType());
+        result.updateAttribute(updateMemo.getAttribute());
+        result.updateAsset(updateMemo.getAsset());
+        result.updatePrice(updateMemo.getPrice());
+        result.updateDescription(updateMemo.getDescription());
 
         //then
-        assertThat(memo.getId()).isEqualTo(result.getId());
-        assertThat(updateMemo.getIncomeExpenseType()).isEqualTo(result.getIncomeExpenseType());
-        assertThat(updateMemo.getAsset()).isEqualTo(result.getAsset());
+        Assertions.assertAll(
+                () -> assertThat(result.getId()).isEqualTo(memo.getId()),
+                () -> assertThat(result.getIncomeExpenseType()).isEqualTo(updateMemo.getIncomeExpenseType()),
+                () -> assertThat(result.getAsset()).isEqualTo(updateMemo.getAsset())
+        );
     }
 }
