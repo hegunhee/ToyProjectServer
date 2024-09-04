@@ -6,6 +6,7 @@ import gunhee.simplememo.dto.memo.MemosResponse;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 
 public class MemosVO {
 
@@ -41,5 +42,18 @@ public class MemosVO {
                 .toList();
 
         return new MemosResponse(memoResponses);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MemosVO memosVO = (MemosVO) o;
+        return Objects.equals(memos, memosVO.memos);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(memos);
     }
 }
