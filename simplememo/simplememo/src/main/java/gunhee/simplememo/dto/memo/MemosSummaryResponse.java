@@ -1,5 +1,6 @@
 package gunhee.simplememo.dto.memo;
 
+import gunhee.simplememo.domain.memo.MemosVO;
 import gunhee.simplememo.dto.TotalSum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
@@ -11,8 +12,8 @@ public class MemosSummaryResponse {
     private final TotalSum totalSum;
     private final MemosResponse memos;
 
-    public MemosSummaryResponse(TotalSum totalSum,MemosResponse memos) {
-        this.totalSum = totalSum;
-        this.memos = memos;
+    public MemosSummaryResponse(MemosVO memosVO) {
+        this.totalSum = memosVO.calculateTotalSumByMonth();
+        this.memos = memosVO.toMemosResponses();
     }
 }

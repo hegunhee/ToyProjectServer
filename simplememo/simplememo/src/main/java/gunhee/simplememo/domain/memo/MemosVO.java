@@ -16,7 +16,7 @@ public class MemosVO {
         this.memos = memos;
     }
 
-    public TotalSum calculateTotalSum() {
+    public TotalSum calculateTotalSumByMonth() {
         BigDecimal incomeSum = calculateSum(IncomeExpenseType.INCOME);
         BigDecimal expenseSum = calculateSum(IncomeExpenseType.EXPENSE);
         return new TotalSum(incomeSum,expenseSum);
@@ -29,7 +29,7 @@ public class MemosVO {
                 .reduce(BigDecimal.ZERO,BigDecimal::add);
     }
 
-    public BigDecimal calculateAttributeSum(String attribute) {
+    public BigDecimal calculateSumByAttribute(String attribute) {
         return memos.stream()
                 .filter((memo) -> memo.getAttribute().equals(attribute))
                 .map(Memo::getPrice)

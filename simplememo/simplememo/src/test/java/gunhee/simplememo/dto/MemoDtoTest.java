@@ -31,13 +31,10 @@ public class MemoDtoTest {
 
         MemosVO memosVO = new MemosVO(memos);
 
-        MemosResponse memosResponse = memosVO.toMemosResponses();
-        BigDecimal totalPrice = memosVO.calculateAttributeSum(attribute);
-
-        AttributeMemoSummaryResponse memoSummaryResponse = new AttributeMemoSummaryResponse(totalPrice, attribute, memosResponse);
+        AttributeMemoSummaryResponse memoSummaryResponse = new AttributeMemoSummaryResponse(attribute, memosVO);
         //then
         Assertions.assertAll(
-                () -> assertThat(memoSummaryResponse.getTotalPrice()).isEqualTo(totalPrice),
+                () -> assertThat(memoSummaryResponse.getTotalPrice()).isEqualTo(memosVO.calculateSumByAttribute(attribute)),
                 () -> assertThat(memoSummaryResponse.getAttribute()).isEqualTo("식비"),
                 () -> assertThat(memoSummaryResponse.getMemos().getMemos().size()).isEqualTo(memos.size())
         );

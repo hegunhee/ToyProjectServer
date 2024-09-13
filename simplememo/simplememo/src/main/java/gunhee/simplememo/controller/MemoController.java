@@ -48,10 +48,7 @@ public class MemoController {
 
         MemosVO memosVO = new MemosVO(memosByDate);
 
-        TotalSum totalSum = memosVO.calculateTotalSum();
-        MemosResponse memosResponse = memosVO.toMemosResponses();
-
-        return new MemosSummaryResponse(totalSum,memosResponse);
+        return new MemosSummaryResponse(memosVO);
     }
 
     @Operation(summary = "분류를 기반으로 가계부 조회", description = "분류를 기반으로 가계부 조회")
@@ -64,10 +61,7 @@ public class MemoController {
 
         MemosVO memosVO = new MemosVO(memosByAttribute);
 
-        BigDecimal totalPrice = memosVO.calculateAttributeSum(attribute);
-        MemosResponse memoResponses = memosVO.toMemosResponses();
-
-        return new AttributeMemoSummaryResponse(totalPrice,attribute,memoResponses);
+        return new AttributeMemoSummaryResponse(attribute,memosVO);
     }
 
     @Operation(summary = "수입/지출 타입 기반으로 가계부 조회", description = "수입/지출 타입 기반으로 가계부 조회")
