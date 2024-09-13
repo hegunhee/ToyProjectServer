@@ -3,7 +3,7 @@ package gunhee.simplememo.service;
 import gunhee.simplememo.domain.memo.IncomeExpenseType;
 import gunhee.simplememo.domain.memo.Memo;
 import gunhee.simplememo.repository.MemoRepository;
-import gunhee.simplememo.service.memo.ReadMemoService;
+import gunhee.simplememo.service.memo.MemoReadService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -24,10 +24,10 @@ import static org.mockito.Mockito.when;
 
 @Slf4j
 @ExtendWith(MockitoExtension.class)
-public class ReadMemoServiceTest {
+public class ReadMemoWriteServiceTest {
 
     @InjectMocks
-    private ReadMemoService readMemoService;
+    private MemoReadService memoReadService;
 
     @Mock
     private MemoRepository memoRepository;
@@ -42,7 +42,7 @@ public class ReadMemoServiceTest {
         doReturn(1).when(memo).getId();
         when(memoRepository.findById(memo.getId())).thenReturn(Optional.of(memo));
 
-        Memo result = readMemoService.findById(memo.getId());
+        Memo result = memoReadService.findById(memo.getId());
 
         //then
         Assertions.assertAll(
@@ -60,7 +60,7 @@ public class ReadMemoServiceTest {
 
         //then
         Assertions.assertThrows(NoSuchElementException.class,() -> {
-            readMemoService.findById(100);
+            memoReadService.findById(100);
         });
     }
 }

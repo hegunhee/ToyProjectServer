@@ -3,7 +3,7 @@ package gunhee.simplememo.service;
 import gunhee.simplememo.domain.category.Category;
 import gunhee.simplememo.domain.category.CategoryType;
 import gunhee.simplememo.repository.CategoryRepository;
-import gunhee.simplememo.service.category.ReadCategoryService;
+import gunhee.simplememo.service.category.CategoryReadService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,10 +20,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class ReadCategoryServiceTest {
+public class ReadCategoryWriteServiceTest {
 
     @InjectMocks
-    private ReadCategoryService readCategoryService;
+    private CategoryReadService readCategoryService;
 
     @Mock
     private CategoryRepository categoryRepository;

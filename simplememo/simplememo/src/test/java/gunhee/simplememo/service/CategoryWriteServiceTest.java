@@ -3,7 +3,7 @@ package gunhee.simplememo.service;
 import gunhee.simplememo.domain.category.Category;
 import gunhee.simplememo.domain.category.CategoryType;
 import gunhee.simplememo.repository.CategoryRepository;
-import gunhee.simplememo.service.category.CategoryService;
+import gunhee.simplememo.service.category.CategoryWriteService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,10 +18,10 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class CategoryServiceTest {
+class CategoryWriteServiceTest {
 
     @InjectMocks
-    private CategoryService categoryService;
+    private CategoryWriteService categoryWriteService;
 
     @Mock
     private CategoryRepository categoryRepository;
@@ -34,7 +34,7 @@ class CategoryServiceTest {
         //when
         when(categoryRepository.save(any(Category.class))).thenReturn(category);
 
-        String result = categoryService.save(category.getType(), category.getName());
+        String result = categoryWriteService.save(category.getType(), category.getName());
         //then
         assertThat(category.getName()).isEqualTo(result);
     }
@@ -50,7 +50,7 @@ class CategoryServiceTest {
 
         //then
         Assertions.assertThrows(IllegalArgumentException.class,() -> {
-            categoryService.save(category.getType(), category.getName());
+            categoryWriteService.save(category.getType(), category.getName());
         });
     }
 }

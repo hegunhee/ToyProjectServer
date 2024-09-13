@@ -3,8 +3,8 @@ package gunhee.simplememo.service;
 import gunhee.simplememo.domain.memo.IncomeExpenseType;
 import gunhee.simplememo.domain.memo.Memo;
 import gunhee.simplememo.repository.MemoRepository;
-import gunhee.simplememo.service.memo.MemoService;
-import gunhee.simplememo.service.memo.ReadMemoService;
+import gunhee.simplememo.service.memo.MemoWriteService;
+import gunhee.simplememo.service.memo.MemoReadService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,13 +22,13 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class MemoServiceTest {
+class MemoWriteServiceTest {
 
     @InjectMocks
-    private MemoService memoService;
+    private MemoWriteService memoWriteService;
 
     @InjectMocks
-    private ReadMemoService readMemoService;
+    private MemoReadService memoReadService;
 
     @Mock
     private MemoRepository memoRepository;
@@ -43,7 +43,7 @@ class MemoServiceTest {
         doReturn(1).when(memo).getId();
         when(memoRepository.save(memo)).thenReturn(memo);
 
-        Integer result = memoService.save(memo);
+        Integer result = memoWriteService.save(memo);
         //then
         assertThat(memo.getId()).isEqualTo(result);
     }
@@ -58,7 +58,7 @@ class MemoServiceTest {
         doReturn(1).when(memo).getId();
         when(memoRepository.findById(memo.getId())).thenReturn(Optional.of(memo));
 
-        Memo result = readMemoService.findById(memo.getId());
+        Memo result = memoReadService.findById(memo.getId());
 
         result.updateDate(updateMemo.getMemoDate());
         result.updateIncomeExpenseType(updateMemo.getIncomeExpenseType());

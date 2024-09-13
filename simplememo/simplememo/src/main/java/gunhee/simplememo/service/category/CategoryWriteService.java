@@ -8,11 +8,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 @Service
-public class CategoryService {
+public class CategoryWriteService {
 
     private final CategoryRepository categoryRepository;
 
-    public CategoryService(CategoryRepository categoryRepository) {
+    public CategoryWriteService(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
     }
 

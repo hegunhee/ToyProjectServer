@@ -9,11 +9,11 @@ import java.util.NoSuchElementException;
 
 @Transactional
 @Service
-public class MemoService {
+public class MemoWriteService {
 
     private final MemoRepository memoRepository;
 
-    public MemoService(MemoRepository memoRepository) {
+    public MemoWriteService(MemoRepository memoRepository) {
         this.memoRepository = memoRepository;
     }
 

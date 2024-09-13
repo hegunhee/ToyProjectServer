@@ -14,11 +14,11 @@ import java.util.NoSuchElementException;
 
 @Transactional(readOnly = true)
 @Service
-public class ReadMemoService {
+public class MemoReadService {
 
     private final MemoRepository memoRepository;
 
-    public ReadMemoService(MemoRepository memoRepository) {
+    public MemoReadService(MemoRepository memoRepository) {
         this.memoRepository = memoRepository;
     }
 

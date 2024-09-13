@@ -11,11 +11,11 @@ import java.util.NoSuchElementException;
 
 @Transactional(readOnly = true)
 @Service
-public class ReadCategoryService {
+public class CategoryReadService {
 
     private final CategoryRepository categoryRepository;
 
-    public ReadCategoryService(CategoryRepository categoryRepository) {
+    public CategoryReadService(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
     }
 

@@ -5,7 +5,7 @@ import gunhee.simplememo.domain.memo.Memo;
 import gunhee.simplememo.dto.memo.StaticsMemoDto;
 import gunhee.simplememo.dto.memo.StaticsMemosResponse;
 import gunhee.simplememo.repository.MemoRepository;
-import gunhee.simplememo.service.memo.ReadMemoService;
+import gunhee.simplememo.service.memo.MemoReadService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 public class ReadMemoQueryServiceTest {
 
     @InjectMocks
-    private ReadMemoService readMemoService;
+    private MemoReadService memoReadService;
 
     @Mock
     private MemoRepository memoRepository;
@@ -42,7 +42,7 @@ public class ReadMemoQueryServiceTest {
                 .thenReturn(memos.stream()
                         .filter((memo) -> memo.getAttribute().equals(attribute)).toList());
 
-        List<Memo> memosResult = readMemoService.findMemosByAttribute(attribute, dateNow.getYear(),dateNow.getMonthValue());
+        List<Memo> memosResult = memoReadService.findMemosByAttribute(attribute, dateNow.getYear(),dateNow.getMonthValue());
         BigDecimal sum = memosResult.stream()
                 .map(Memo::getPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
@@ -71,7 +71,7 @@ public class ReadMemoQueryServiceTest {
                 .thenReturn(getSampleStaticsMemos());
 
         //then
-        StaticsMemosResponse staticsResponse = readMemoService.findStaticsMemo(IncomeExpenseType.EXPENSE, dateNow.getYear(), dateNow.getMonthValue());
+        StaticsMemosResponse staticsResponse = memoReadService.findStaticsMemo(IncomeExpenseType.EXPENSE, dateNow.getYear(), dateNow.getMonthValue());
 
         Assertions.assertAll(
                 () -> assertThat(staticsResponse.getStaticsMemos().size()).isEqualTo(1),
