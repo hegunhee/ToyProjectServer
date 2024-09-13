@@ -39,7 +39,14 @@ public class ReadMemoService {
 
     public StaticsMemosResponse findStaticsMemo(IncomeExpenseType type, int year, int month) {
         BigDecimal sums = memoRepository.sumMemoPricesByIncomeExpenseType(type, year, month);
-        List<StaticsMemoDto> staticsMemos = memoRepository.findMemosByIncomeExpenseType(sums, type, year, month);
+        BigDecimal newSums = adjustPrecisionAndScale(sums);
+        List<StaticsMemoDto> staticsMemos = memoRepository.findMemosByIncomeExpenseType(newSums, type, year, month);
         return new StaticsMemosResponse(type,year,month,sums,staticsMemos);
+    }
+
+    private BigDecimal adjustPrecisionAndScale(BigDecimal currentBigDecimal) {
+        int currentPrecision = currentBigDecimal.precision();
+        int newPrecision = currentPrecision + currentBigDecimal.scale();
+        return currentBigDecimal.setScale(newPrecision);
     }
 }
