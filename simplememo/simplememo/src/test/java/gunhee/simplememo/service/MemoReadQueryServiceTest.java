@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class ReadMemoQueryServiceTest {
+public class MemoReadQueryServiceTest {
 
     @InjectMocks
     private MemoReadService memoReadService;
@@ -67,12 +67,12 @@ public class ReadMemoQueryServiceTest {
                         .reduce(BigDecimal.ZERO,BigDecimal::add));
 
         BigDecimal totalSum = memoRepository.sumMemoPricesByIncomeExpenseType(IncomeExpenseType.EXPENSE, dateNow.getYear(), dateNow.getMonthValue());
-        when(memoRepository.findMemosByIncomeExpenseType(totalSum,IncomeExpenseType.EXPENSE,dateNow.getYear(),dateNow.getMonthValue()))
+        BigDecimal newSums = adjustPrecisionAndScale(totalSum);
+        when(memoRepository.findMemosByIncomeExpenseType(newSums,IncomeExpenseType.EXPENSE,dateNow.getYear(),dateNow.getMonthValue()))
                 .thenReturn(getSampleStaticsMemos());
 
         //then
         StaticsMemosResponse staticsResponse = memoReadService.findStaticsMemo(IncomeExpenseType.EXPENSE, dateNow.getYear(), dateNow.getMonthValue());
-
         Assertions.assertAll(
                 () -> assertThat(staticsResponse.getStaticsMemos().size()).isEqualTo(1),
                 () -> assertThat(staticsResponse.getType()).isEqualTo(IncomeExpenseType.EXPENSE),
@@ -89,7 +89,13 @@ public class ReadMemoQueryServiceTest {
     }
 
     private List<StaticsMemoDto> getSampleStaticsMemos() {
-        StaticsMemoDto staticsMemo = new StaticsMemoDto(BigDecimal.valueOf(100), "식비", BigDecimal.valueOf(13000));
+        StaticsMemoDto staticsMemo = new StaticsMemoDto(BigDecimal.valueOf(100), "식비", BigDecimal.valueOf(13000.00000));
         return List.of(staticsMemo);
+    }
+
+    private BigDecimal adjustPrecisionAndScale(BigDecimal currentBigDecimal) {
+        int currentPrecision = currentBigDecimal.precision();
+        int newPrecision = currentPrecision + currentBigDecimal.scale();
+        return currentBigDecimal.setScale(newPrecision);
     }
 }

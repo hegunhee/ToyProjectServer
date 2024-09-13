@@ -5,8 +5,6 @@ import gunhee.simplememo.repository.MemoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.NoSuchElementException;
-
 @Transactional
 @Service
 public class MemoWriteService {
@@ -24,7 +22,7 @@ public class MemoWriteService {
 
     public Integer update(Integer memoId, Memo updatedMemo) {
         Memo persistedMemo = memoRepository.findById(memoId).orElseThrow(() -> {
-            throw new NoSuchElementException("업데이트하려는 메모가 존재하지않습니다.");
+            throw new IllegalArgumentException("업데이트하려는 메모가 존재하지않습니다.");
         });
 
         persistedMemo.updateDate(updatedMemo.getMemoDate());

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Transactional(readOnly = true)
 @Service
@@ -21,7 +20,7 @@ public class CategoryReadService {
 
     public Category findById(String categoryName) {
         Category category = categoryRepository.findById(categoryName).orElseThrow(() -> {
-            throw new NoSuchElementException(categoryName+" 카테고리가 존재하지 않습니다.");
+            throw new IllegalArgumentException(categoryName+" 카테고리가 존재하지 않습니다.");
         });
         return category;
     }

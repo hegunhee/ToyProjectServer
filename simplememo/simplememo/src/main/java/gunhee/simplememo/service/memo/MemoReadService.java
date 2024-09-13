@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Transactional(readOnly = true)
 @Service
@@ -24,7 +23,7 @@ public class MemoReadService {
 
     public Memo findById(Integer memoId) {
         Memo memo = memoRepository.findById(memoId).orElseThrow(() -> {
-            throw new NoSuchElementException("메모를 찾지 못했습니다.");
+            throw new IllegalArgumentException("메모를 찾지 못했습니다.");
         });
         return memo;
     }

@@ -15,7 +15,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,7 +23,7 @@ import static org.mockito.Mockito.when;
 
 @Slf4j
 @ExtendWith(MockitoExtension.class)
-public class ReadMemoWriteServiceTest {
+public class MemoReadServiceTest {
 
     @InjectMocks
     private MemoReadService memoReadService;
@@ -54,13 +53,13 @@ public class ReadMemoWriteServiceTest {
     @Test
     void findNotPersistedData() {
         //given
-
+        int illegalId = -1;
         //when
-        when(memoRepository.findById(100)).thenThrow(NoSuchElementException.class);
+        when(memoRepository.findById(illegalId)).thenThrow(IllegalArgumentException.class);
 
         //then
-        Assertions.assertThrows(NoSuchElementException.class,() -> {
-            memoReadService.findById(100);
+        Assertions.assertThrows(IllegalArgumentException.class,() -> {
+            memoReadService.findById(illegalId);
         });
     }
 }

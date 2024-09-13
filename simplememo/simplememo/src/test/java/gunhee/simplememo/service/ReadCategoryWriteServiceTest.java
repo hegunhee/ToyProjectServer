@@ -12,7 +12,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -53,7 +52,7 @@ public class ReadCategoryWriteServiceTest {
         when(categoryRepository.findById(category.getName())).thenReturn(Optional.empty());
 
         //then
-        Assertions.assertThrows(NoSuchElementException.class, () -> readCategoryService.findById(category.getName()));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> readCategoryService.findById(category.getName()));
     }
 
     @Test
