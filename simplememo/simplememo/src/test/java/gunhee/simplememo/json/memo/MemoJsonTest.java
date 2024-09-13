@@ -6,12 +6,14 @@ import gunhee.simplememo.domain.memo.Memo;
 import gunhee.simplememo.dto.memo.MemoRequest;
 import gunhee.simplememo.json.memo.code.MemoObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
 public class MemoJsonTest {
@@ -28,8 +30,10 @@ public class MemoJsonTest {
         String memoString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(memo);
         log.info("memo={}",memoString);
         //then
-        Assertions.assertThat(memo.getPrice()).isEqualTo(new BigDecimal("10000"));
-        Assertions.assertThat(memo.getIncomeExpenseType()).isEqualTo(IncomeExpenseType.EXPENSE);
-        Assertions.assertThat(memo.getMemoDate().getYear()).isEqualTo(2024);
+        Assertions.assertAll(
+                () -> assertThat(memo.getPrice()).isEqualTo(new BigDecimal("10000")),
+                () -> assertThat(memo.getIncomeExpenseType()).isEqualTo(IncomeExpenseType.EXPENSE),
+                () -> assertThat(memo.getMemoDate().getYear()).isEqualTo(2024)
+        );
     }
 }

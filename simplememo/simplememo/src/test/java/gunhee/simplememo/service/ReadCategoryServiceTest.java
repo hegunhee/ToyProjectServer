@@ -92,9 +92,5 @@ public class ReadCategoryServiceTest {
                 () -> assertThat(resultExist).isTrue(),
                 () -> assertThat(resultNotExist).isFalse()
         );
-        assertThat(resultExist).isTrue();
-        assertThat(resultNotExist).isFalse();
     }
-
-
 }
