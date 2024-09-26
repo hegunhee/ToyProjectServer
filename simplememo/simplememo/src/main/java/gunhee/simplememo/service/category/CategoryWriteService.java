@@ -3,10 +3,12 @@ package gunhee.simplememo.service.category;
 import gunhee.simplememo.domain.category.Category;
 import gunhee.simplememo.domain.category.CategoryType;
 import gunhee.simplememo.repository.CategoryRepository;
+import io.micrometer.core.annotation.Counted;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
+@Counted("my.memo.write")
 @Service
 public class CategoryWriteService {
 

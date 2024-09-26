@@ -5,6 +5,7 @@ import gunhee.simplememo.domain.memo.Memo;
 import gunhee.simplememo.dto.memo.StaticsMemoDto;
 import gunhee.simplememo.dto.memo.StaticsMemosResponse;
 import gunhee.simplememo.repository.MemoRepository;
+import io.micrometer.core.annotation.Counted;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,6 +13,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Transactional(readOnly = true)
+@Counted("my.memo.read")
 @Service
 public class MemoReadService {
 

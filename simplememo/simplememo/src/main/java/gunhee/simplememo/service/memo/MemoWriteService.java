@@ -2,10 +2,12 @@ package gunhee.simplememo.service.memo;
 
 import gunhee.simplememo.domain.memo.Memo;
 import gunhee.simplememo.repository.MemoRepository;
+import io.micrometer.core.annotation.Counted;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
+@Counted("my.memo.write")
 @Service
 public class MemoWriteService {
 

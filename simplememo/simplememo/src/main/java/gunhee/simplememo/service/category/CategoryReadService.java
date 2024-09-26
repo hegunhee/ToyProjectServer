@@ -3,12 +3,14 @@ package gunhee.simplememo.service.category;
 import gunhee.simplememo.domain.category.Category;
 import gunhee.simplememo.domain.category.CategoryType;
 import gunhee.simplememo.repository.CategoryRepository;
+import io.micrometer.core.annotation.Counted;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Transactional(readOnly = true)
+@Counted("my.memo.read")
 @Service
 public class CategoryReadService {
 
